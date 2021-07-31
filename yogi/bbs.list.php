@@ -18,21 +18,21 @@
     mysqli_query($dbc, "SET NAMES UTF8");
 
     // 검색결과와 총 갯수, 페이지수 계산
-    $query  = "SELECT * FROM yg_bbs WHERE catno='$catno'" ;
+    $query  = "SELECT * FROM yg_bbs WHERE bbs_catno='$catno'" ;
     $result = mysqli_query($dbc, $query);
     $total  = mysqli_num_rows($result);
     $num_pages = ceil($total / $results_per_page);
 
     // 현재 페이지의 내용만 가져 오는 쿼리
-    $query  = $query . "  ORDER BY bno DESC LIMIT $skip, $results_per_page";
+    $query  = $query . "  ORDER BY bbs_bno DESC LIMIT $skip, $results_per_page";
     $result = mysqli_query($dbc, $query) or die('Query Error');
     while ($row = mysqli_fetch_array($result)) {
         echo '  <tr>';
-        echo ' <td>' . $row['bno'] . '</td>';
-        echo ' <td>' . substr($row['datetime'],2,8) . '</td>';
-        echo ' <td class="text-left"><a href="'.$_SERVER['PHP_SELF'].'?mode=view&bno='.$row['bno'].'">'.$row['subject'].'</a></td>';
-        echo ' <td>' . $row['writer'] . '</td>';
-        echo ' <td>' . $row['hit'] . '</td>';
+        echo ' <td>' . $row['bbs_bno'] . '</td>';
+        echo ' <td>' . substr($row['bbs_datetime'],2,8) . '</td>';
+        echo ' <td class="text-left"><a href="'.$_SERVER['PHP_SELF'].'?mode=view&bbs_bno='.$row['bbs_bno'].'">'.$row['bbs_subject'].'</a></td>';
+        echo ' <td>' . $row['bbs_writer'] . '</td>';
+        echo ' <td>' . $row['bbs_hit'] . '</td>';
         echo '  </tr>' . "\n";
     }
     echo "  <tbody>\n";
